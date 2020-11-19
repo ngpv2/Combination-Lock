@@ -1,0 +1,156 @@
+public class LockDataStructureClass {
+    
+    private int X;
+    private int Y;
+    private int Z;
+    private final int LAST_VALUE = 39;
+    private int top = 0;
+    private boolean xTurn = false;
+    private boolean yTurn = false;
+    private boolean zTurn = false;
+    private boolean locked = false;
+  
+    public LockDataStructureClass(){
+        X = 0;
+        Y = 0;
+        Z = 0;      
+    }
+    
+    public LockDataStructureClass(int X, int Y, int Z){
+        this.X = X;
+        this.Y = Y;
+        this.Z = Z;
+    }
+    
+    public void alter(int x, int y, int z){
+        setX(x);
+        setY(y);
+        setZ(z);         
+    }
+    
+    //1 for X, 2 for Y , 3 for Z
+    public boolean turn(int combination, int combinationOrder){
+                
+        if(combinationOrder == 1) {
+            
+            System.out.print("First Number (" + combination + ")" + top + " ");
+             
+             for(int i = LAST_VALUE ; i > top; i--){ 
+               System.out.print(i + " ");       
+             }
+             
+             for(int i = top; i <= combination; i++){
+               System.out.print(i + " ");  
+             }
+             
+             top = combination;
+             
+             if(combination == X)
+                 return true;
+        }
+        
+        else if(combinationOrder == 2){
+             
+            System.out.print("\nSecond Number (" + combination + "): ");
+        
+             for(int i = top ; i <= LAST_VALUE ; i++){ 
+               System.out.print(i + " ");       
+             }
+             
+             top = 0;
+             
+             for(int i = top; i <= combination; i++){
+               System.out.print(i + " ");  
+             } 
+            
+             top = combination;
+             
+             if(combination == Y)
+                 return true;
+       
+        }
+        
+        else if(combinationOrder == 3){ //TURN FOR Z -> NO REVOLUTION , GO DIRECTLY TO NUMBER(?) 
+            
+           System.out.print("\nThird Number (" + combination + "): "); 
+                 
+          if(Y > Z)
+              
+            for(int i = top; i >= combination; i--)           
+                System.out.print(i + " ");
+          
+          if(Y < Z) 
+              
+            for(int i = top; i <= combination; i++) 
+                System.out.print(i + " ");
+          
+          if(X == Y)
+              System.out.println(X);
+                     
+           top = combination;
+           
+           if(combination == Z)
+              return true;
+      
+        }
+
+        return false;
+    }
+    
+    public void attempt(int x, int y, int z){ 
+        
+        xTurn = turn(x, 1);
+        yTurn = turn(y, 2);
+        zTurn = turn(z, 3);
+        System.out.println("");
+      
+        if(xTurn == true && yTurn == true && zTurn == true){
+            System.out.println("Open");
+            locked = false;
+        }
+        
+        else {
+            System.out.println("Locked");            
+        }
+            
+    }
+    
+    public int current(){ //Number at the top
+        
+        return top;
+    }
+    
+    public void close(){
+        locked = true;
+        System.out.println("Locked");
+    }
+    
+    public void inquire(){        
+        if(locked == true) 
+            System.out.println("Closed");
+        else
+            System.out.println("Open");        
+    }
+    
+    public void setX(int x){
+        X = x;
+    }
+    
+    public void setY(int y){
+        Y = y;
+    }
+
+    public void setZ(int z){
+        Z = z;
+    }
+    
+    @Override
+    public String toString(){
+       if(locked == true)
+       return "Lock status: Open";
+       else
+       return "Lock status: Closed";  
+    }
+    
+  
+}

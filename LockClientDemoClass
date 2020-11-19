@@ -1,0 +1,71 @@
+import java.util.Scanner;
+
+public class LockClientDemoClass {
+    
+  
+    public static void main(String[] args) {
+        
+        LockDataStructureClass lock = new LockDataStructureClass();
+        
+        Scanner input = new Scanner(System.in);
+        
+        boolean done = false;
+        int x, y, z;
+             
+        int choice;
+             
+        do{
+                  
+            System.out.println("1:Set lock combination");
+            System.out.println("2:Close lock");
+            System.out.println("3:Check status");
+            System.out.println("4:Attempt to open lock");
+            System.out.println("5:Check what the dial is currently pointing at");
+            System.out.println("6:Exit the program");
+           
+            choice = input.nextInt();
+           
+            switch(choice){
+                
+                case 1: System.out.print("Set X: ");
+                        x = input.nextInt();
+                        System.out.print("\nSet Y: ");
+                        y = input.nextInt();
+                        System.out.print("\nSet Z: ");
+                        z = input.nextInt();
+                        
+                        lock.alter(x, y, z);            
+                        break;
+                    
+                case 2: lock.close();
+                        break;
+                        
+                case 3: lock.inquire();
+                        break;
+                        
+                case 4: System.out.print("Enter X: ");
+                        x = input.nextInt();
+                        System.out.print("\nEnter Y: ");
+                        y = input.nextInt();
+                        System.out.print("\nEnter Z: ");
+                        z = input.nextInt();
+                        lock.attempt(x, y, z);
+                        break;
+                        
+                case 5: System.out.println("Number at the top: " + lock.current());
+                        break;
+                        
+                case 6: done = true; 
+                        break;
+                        
+                default: System.out.println("Invalid choice.");
+                
+            }
+                                        
+        }while(!done);
+        
+          
+    }//End main
+
+    
+}//End class
